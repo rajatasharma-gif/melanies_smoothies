@@ -2,6 +2,9 @@
 import streamlit as st
 # from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
+import requests  
+smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
+st_df = st.dataframe(data = smoothiefroot_response.jason(), use_container_width = True)
 
 # Write directly to the app
 st.title(f"Example Streamlit App :icecream: {st.__version__}")
