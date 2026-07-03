@@ -20,30 +20,24 @@ st.write("The name on smoothie will be ", name_on_order)
 
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
 pd_df = my_dataframe.to_pandas()
-st.dataframe(data=my_dataframe, use_container_width=True)
+# st.dataframe(data=my_dataframe, use_container_width=True)
 # st.stop()
 
 ingredients = st.multiselect('Select upto 5 fruits', my_dataframe)
-# if len(ingredients<=5):
-#     st.text(ingredients)
 
 if ingredients:
-    # st.write(ingredients)
-    # st.text(ingredients)
     ingredients_string = ''
 
     for fruit_choosen in ingredients:
       ingredients_string = ingredients_string + ' ' + fruit_choosen
 
-      search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_choosen, 'SEARCH_ON'].iloc[0]
-      st.write('The search value for ', fruit_choosen  ,' is ', search_on , '.')
+      search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_choosen, 'search_on'].iloc[0]
+      # st.write('The search value for ', fruit_choosen  ,' is ', search_on , '.')
 
-      st.subheader(search_on + 'Nutrition Information')
+      st.subheader(search_on + ' Nutrition Information')
       url = "https://my.smoothiefroot.com/api/fruit/{search_on}"
       smoothiefroot_response = requests.get(url)  
       st_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width = True)
-      
-    # st.write(ingredients_string)
 
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
                     values ('""" + ingredients_string + """', '""" + name_on_order + """')"""
