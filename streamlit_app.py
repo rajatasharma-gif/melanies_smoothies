@@ -35,7 +35,7 @@ if ingredients:
       # st.write('The search value for ', fruit_choosen  ,' is ', search_on , '.')
 
       st.subheader(SEARCH_ON + ' Nutrition Information')
-      url = "https://my.smoothiefroot.com/api/fruit/{SEARCH_ON}"
+      url = f"https://my.smoothiefroot.com/api/fruit/{SEARCH_ON}"
       smoothiefroot_response = requests.get(url)  
       st_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width = True)
 
